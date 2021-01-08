@@ -7,6 +7,7 @@ const FatalError = () =>(
         <h1 className="Error text">Error: 500 Unexpected Error</h1>
         <img src={FatalErrorImg} alt="500 Unexpected Error" className="Error_Image"></img>
     </div>
+    
 )
 
 export default FatalError
