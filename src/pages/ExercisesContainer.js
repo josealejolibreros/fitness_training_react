@@ -1,55 +1,45 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Exercises from './Exercises'
-import Button from '../components/Button'
+
 import Loading from '../components/Loading'
 import FatalError from './500'
-class ExercisesContainer extends React.Component {
 
-    state = {
-            data : [],
-            loading: true,
-            error: null,
-        }
 
-    async componentDidMount(){
-        await this.fetchExercise()
-    }
+const ExercisesContainer = () => {
+    const [data, setData] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
 
-    fetchExercise = async () =>{
-        try{
-            let res = await fetch('http://localhost:8000/api/exercises')
-            let data = await res.json()
-            this.setState({
-                data,
-                loading: false
-            })
-        }catch(error){
-            this.setState({
+    useEffect(() => {
+        const fetchExercise = async () => {
+            try {
+                let res = await fetch('http://localhost:8000/api/exercises')
+                let data = await res.json()
+                setData(data)
+                setLoading(false)
                 
-                loading: false,
-                error
-            })
+            }catch (error) {
+                setLoading(false)
+                setError(error)
 
+            }
         }
+        fetchExercise()
+
+    }, [])
+
+
+    if (loading) {
+        return <Loading></Loading>
     }
-
-    render() {
-        if(this.state.loading){
-            return <Loading></Loading>
-        }
-        if(this.state.error){
-            return <FatalError></FatalError>
-        }
-        return (
-            <Exercises data={this.state.data}></Exercises>
-            
-
-
-        )
-
+    if (error) {
+        return <FatalError></FatalError>
     }
+    return (
+        <Exercises data={data}></Exercises>
+    )
+
 }
-
 
 export default ExercisesContainer
