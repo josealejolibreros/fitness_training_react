@@ -56,6 +56,7 @@ class ExerciseNew extends React.Component{
 
             this.setState({
                 loading: false,
+                
                 error
             })
         }
