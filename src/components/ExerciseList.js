@@ -10,11 +10,7 @@ const ExerciseList = ({exercises}) => {
                     return (
                         <Card
                             key={exercise.id}
-                            title={exercise.title}
-                            description={exercise.description}
-                            img={exercise.img}
-                            leftColor={exercise.leftColor}
-                            rightColor={exercise.rightColor}
+                            {...exercise}
                         />
                     )
                 })
