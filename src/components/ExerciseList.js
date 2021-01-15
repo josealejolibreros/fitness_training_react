@@ -4,7 +4,7 @@ import Card from './Card'
 
 const ExerciseList = ({exercises}) => {
     return (
-        <div>
+        <>
             {
                 exercises.map((exercise) => {
                     return (
@@ -20,7 +20,7 @@ const ExerciseList = ({exercises}) => {
                 })
             }
 
-        </div>
+        </>
     )
 }
 
