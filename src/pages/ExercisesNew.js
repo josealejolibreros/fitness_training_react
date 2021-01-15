@@ -1,6 +1,7 @@
 import React from 'react'
 import ExerciseForm from '../components/ExerciseForm'
 import Card from '../components/Card'
+import FatalError from './500'
 class ExerciseNew extends React.Component{
 
     state = {
@@ -10,7 +11,9 @@ class ExerciseNew extends React.Component{
             img: '', 
             leftColor: '', 
             rightColor: ''
-        }
+        },
+        loading: false,
+        error: null
     }
 
     handleChange = e =>{
@@ -22,12 +25,47 @@ class ExerciseNew extends React.Component{
         })
     }
 
-    handleSubmit = e =>{
+    handleSubmit = async e =>{
+        this.setState({
+            loading: true
+        })
         e.preventDefault()
-        console.log(this.state.form)
+
+        
+        try{
+            let config = {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify(this.state.form)
+            }
+
+            let res = await fetch('http://localhost:8000/api/exercises', config)
+
+            let json = await res.json()
+
+            this.setState({
+                loading: false,
+
+            })
+
+            this.props.history.push('/exercise')
+        }catch(error){
+
+            this.setState({
+                loading: false,
+                error
+            })
+        }
+        
     }
 
     render(){
+        if(this.state.error){
+            return <FatalError></FatalError>
+        }
         return (
             <div className="row">
                 <div className="col-sm">
@@ -38,7 +76,7 @@ class ExerciseNew extends React.Component{
                 <ExerciseForm
                 onChange = {this.handleChange}
                 form = {this.state.form}
-                handleSubmit = {this.handleSubmit}
+                onSubmit = {this.handleSubmit}
             >
 
             </ExerciseForm>

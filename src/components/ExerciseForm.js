@@ -14,11 +14,11 @@ class ExerciseForm extends React.Component{
     
 
     render(){
-        const {onChange,form, handleSubmit} = this.props
+        const {onChange,form, onSubmit} = this.props
         return (
             <div className="container">
                 <form 
-                    onSubmit={handleSubmit}
+                    onSubmit={onSubmit}
                 >
                     <div className="form-group">
                         <input
